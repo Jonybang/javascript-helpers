@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Image multiupload - JavaScript helpers</title>
+	<style>
+		tr.level-1 td:first-child {
+			padding-left: 25px;
+		}
+		tr.level-2 td:first-child {
+			padding-left: 50px;
+		}
+		.tr-dropdown {
+			cursor: pointer;
+		}
+		.tr-hide {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<th>First col</th>
+			<th>Second col</th>
+		</tr>
+		<tr class="tr-dropdown" data-target="nested-1">
+			<td colspan="2">Parent first row</td>
+		</tr>
+		<tr class="tr-hide nested-1 level-1">
+			<td colspan="2">Nested first row</td>
+		</tr>
+		<tr class="tr-hide nested-1 level-1">
+			<td colspan="2">Nested second row</td>
+		</tr>
+		<tr class="tr-hide nested-1 level-1">
+			<td colspan="2">Nested third row</td>
+		</tr>
+		<tr class="tr-dropdown" data-target="nested-2">
+			<td colspan="2">Parent second row</td>
+		</tr>
+		<tr class="tr-hide nested-2 level-2">
+			<td colspan="2">Nested first row</td>
+		</tr>
+		<tr class="tr-hide nested-2 level-2">
+			<td colspan="2">Nested second row</td>
+		</tr>
+		<tr class="tr-hide nested-2 level-2">
+			<td colspan="2">Nested third row</td>
+		</tr>
+	</table>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+		  $('tr').not(':first').children('td').wrapInner('<div>');
+		  $('tr.tr-hide td > div').hide();
+
+		  $('.tr-dropdown').click( function() {
+		      var $this = $(this);
+		      var target = $(this).attr('data-target');
+
+		      var $target = $('tr.' + target);
+
+		      if($('tr.' + target + ':not(.hide)').is(':hidden')) {
+		          $this.addClass('dropup');
+		      } else {
+		          $this.removeClass('dropup');
+		      }
+		      $target.show();
+
+		      $('tr.' + target + ' td > div').slideToggle(500, function() {
+		          if(!$this.hasClass('dropup')) {
+		              $target.hide();
+		          }
+		      });
+		  });
+		})
+	</script>
+</body>
+</html>
+

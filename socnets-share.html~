@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Socnets share - JavaScript helpers</title>
+	<meta name="description" content="Description for socnet">
+	<meta name="og:image" content="JavaScript-logo.png">
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<h2>
+		Lets share:
+		<div class="share-social">
+			<div><a href class="vk">Vkontakte</a></div>
+			<div><a href class="fb">Facebook</i></a></div>
+			<div><a href class="tw">Twitter</a></div>
+			<div><a href class="lj">LiveJournal</a></div>
+		</div>
+	</h2>
+
+	<script type="text/javascript">
+		$(function(){
+			$('.share-social a').click(function(event){
+			    var url = window.location.href;
+			    var title = document.title;
+			    var description = $('meta[name="description"]').attr("content");
+			    var image = $('img.share').attr('src') || $('meta[name="og:image"]').attr("content");
+			    
+			    if($(this).hasClass('lj')){
+			        $(this).attr('href', 'http://www.livejournal.com/update.bml?event='+url+'&subject='+title);
+			        $(this).attr('target', '_blank');
+			        return;
+			    }
+			    
+			    event.preventDefault();
+			    
+			    var shareLink;
+			    
+			    if($(this).hasClass('vk'))
+			        shareLink = 'http://vk.com/share.php?url=' + url + '&title=' + title + '&image=' + image + '&description=' + description;
+			        
+			    if($(this).hasClass('fb'))
+			        shareLink = 'http://www.facebook.com/sharer.php?m2w&s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + description + '&p[images][0]=' + image;
+			                
+			    if($(this).hasClass('tw'))
+			        shareLink = 'https://twitter.com/intent/tweet?text=' + title + '&url=' + url;
+			        
+			    window.open(shareLink, '_blank', 'scrollbars=0, resizable=1, menubar=0, left=100, top=100, width=550, height=440, toolbar=0, status=0');
+			});
+		});
+	</script>
+</body>
+</html>
+
